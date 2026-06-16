@@ -4,8 +4,77 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fórum de Perguntas | DRPAD Cura</title>
-  <meta name="description" content="Tire suas dúvidas sobre DRPAD com outros pacientes e familiares. Fórum gratuito da DRPAD Cura — sem necessidade de cadastro.">
+  <meta name="description" content="Tire suas dúvidas sobre DRPAD com outros pacientes e familiares. Sem necessidade de cadastro.">
   <link rel="stylesheet" href="css/style.css">
+  <style>
+    .forum-layout { display: grid; grid-template-columns: 220px 1fr; gap: 28px; align-items: start; }
+    .forum-sidebar { position: sticky; top: 80px; }
+    .sidebar-title { font-size: 11px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+    .cat-btn { display: flex; align-items: center; gap: 10px; width: 100%; background: none; border: none; padding: 10px 14px; border-radius: 10px; font-size: 13px; font-weight: 500; color: var(--text); cursor: pointer; text-align: left; transition: background .15s, color .15s; margin-bottom: 4px; }
+    .cat-btn:hover { background: var(--light); }
+    .cat-btn.active { background: var(--blue); color: white; }
+    .cat-btn .cat-count { margin-left: auto; font-size: 11px; background: rgba(0,0,0,.08); padding: 1px 7px; border-radius: 20px; }
+    .cat-btn.active .cat-count { background: rgba(255,255,255,.2); }
+    .forum-bar { display: flex; gap: 12px; align-items: center; margin-bottom: 20px; flex-wrap: wrap; }
+    .forum-search { flex: 1; min-width: 200px; padding: 9px 14px 9px 36px; border: 1.5px solid var(--light); border-radius: 10px; font-size: 14px; color: var(--text); background: white url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%235a7290' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.099zm-5.242 1.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E") no-repeat 12px center; outline: none; font-family: inherit; }
+    .forum-search:focus { border-color: var(--mid); }
+    .btn-nova-pergunta { background: var(--blue); color: white; border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap; transition: background .15s; }
+    .btn-nova-pergunta:hover { background: var(--navy); }
+    .topico { background: white; border-radius: 14px; box-shadow: 0 1px 8px rgba(15,35,64,.07); margin-bottom: 12px; border-left: 4px solid var(--mid); transition: box-shadow .15s, transform .15s; }
+    .topico:hover { box-shadow: 0 4px 20px rgba(15,35,64,.12); transform: translateY(-1px); }
+    .topico-header { display: flex; align-items: flex-start; padding: 18px 20px; gap: 14px; cursor: pointer; }
+    .topico-votes { display: flex; flex-direction: column; align-items: center; gap: 4px; flex-shrink: 0; padding-top: 2px; }
+    .vote-btn { background: none; border: 1.5px solid var(--light); border-radius: 8px; width: 36px; height: 30px; cursor: pointer; font-size: 14px; display: flex; align-items: center; justify-content: center; transition: all .15s; color: var(--muted); }
+    .vote-btn:hover { border-color: var(--mid); color: var(--mid); background: #eff6ff; }
+    .vote-btn.voted { border-color: var(--mid); background: var(--mid); color: white; }
+    .vote-count { font-size: 14px; font-weight: 700; color: var(--navy); }
+    .topico-body { flex: 1; }
+    .topico-titulo { font-size: 15px; font-weight: 700; color: var(--navy); margin-bottom: 6px; line-height: 1.4; }
+    .topico-preview { font-size: 13px; color: var(--muted); line-height: 1.5; margin-bottom: 10px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    .topico-meta { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+    .tag-cat { font-size: 11px; font-weight: 700; padding: 2px 9px; border-radius: 20px; letter-spacing: .04em; }
+    .topico-info { font-size: 12px; color: var(--muted); }
+    .respostas-badge { margin-left: auto; font-size: 12px; color: var(--muted); display: flex; align-items: center; gap: 5px; }
+    .topico-expandido { padding: 0 20px 20px; border-top: 1px solid var(--light); }
+    .topico-texto-completo { font-size: 14px; color: #374151; line-height: 1.75; padding: 16px 0; }
+    .respostas-title { font-size: 13px; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; margin: 16px 0 12px; }
+    .resposta { background: var(--bg); border-radius: 10px; padding: 14px 16px; margin-bottom: 10px; }
+    .resposta-autor { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .resposta-texto { font-size: 14px; color: #374151; line-height: 1.65; }
+    .resposta-data { font-size: 11px; color: var(--muted); margin-top: 6px; }
+    .form-resposta { margin-top: 16px; }
+    .form-resposta-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px; }
+    .modal-overlay { position: fixed; inset: 0; background: rgba(15,35,64,.55); z-index: 200; display: flex; align-items: center; justify-content: center; padding: 20px; opacity: 0; pointer-events: none; transition: opacity .2s; }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+    .modal { background: white; border-radius: 18px; width: 100%; max-width: 680px; max-height: 90vh; overflow-y: auto; padding: 32px; transform: translateY(20px); transition: transform .2s; box-shadow: 0 20px 60px rgba(15,35,64,.25); }
+    .modal-overlay.open .modal { transform: translateY(0); }
+    .modal-title { font-family: 'Fraunces', serif; font-size: 1.3rem; font-weight: 600; color: var(--navy); margin-bottom: 20px; }
+    .modal-close { float: right; background: none; border: none; font-size: 22px; cursor: pointer; color: var(--muted); margin-top: -4px; }
+    .field-group { margin-bottom: 16px; }
+    .field-label { display: block; font-size: 12px; font-weight: 600; color: var(--muted); margin-bottom: 6px; }
+    .field-input { width: 100%; padding: 10px 14px; border: 1.5px solid var(--light); border-radius: 10px; font-size: 14px; color: var(--text); font-family: inherit; outline: none; transition: border-color .15s; box-sizing: border-box; }
+    .field-input:focus { border-color: var(--mid); }
+    textarea.field-input { min-height: 100px; resize: vertical; }
+    .field-select { width: 100%; padding: 10px 14px; border: 1.5px solid var(--light); border-radius: 10px; font-size: 14px; color: var(--text); background: white; font-family: inherit; outline: none; }
+    .modal-footer { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; }
+    .btn-cancelar { background: var(--light); color: var(--text); border: none; border-radius: 10px; padding: 10px 20px; font-size: 14px; cursor: pointer; font-weight: 600; }
+    .btn-enviar { background: var(--blue); color: white; border: none; border-radius: 10px; padding: 10px 24px; font-size: 14px; cursor: pointer; font-weight: 600; transition: background .15s; }
+    .btn-enviar:hover { background: var(--navy); }
+    .btn-enviar:disabled { background: var(--muted); cursor: not-allowed; }
+    .loading-state { text-align: center; padding: 48px 0; color: var(--muted); font-size: 14px; }
+    .empty-state { text-align: center; padding: 48px 0; color: var(--muted); }
+    .empty-state .empty-icon { font-size: 40px; margin-bottom: 12px; }
+    .empty-state p { font-size: 14px; margin-bottom: 16px; }
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--navy); color: white; border-radius: 10px; padding: 10px 22px; font-size: 13px; font-weight: 600; z-index: 999; box-shadow: 0 4px 20px rgba(0,0,0,.2); opacity: 0; transition: opacity .3s; pointer-events: none; }
+    .toast.show { opacity: 1; }
+    @media (max-width: 700px) {
+      .forum-layout { grid-template-columns: 1fr; }
+      .forum-sidebar { position: static; display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 12px; }
+      .sidebar-title { display: none; }
+      .cat-btn { width: auto; padding: 6px 12px; font-size: 12px; }
+      .form-resposta-row { grid-template-columns: 1fr; }
+    }
+  </style>
 </head>
 <body>
 
@@ -19,68 +88,308 @@
       <li><a href="tratamento.html">Tratamento</a></li>
       <li><a href="ferramentas.html">Ferramentas</a></li>
       <li><a href="faq.html">FAQ</a></li>
-      <li><a href="forum.html">Fórum</a></li>
+      <li><a href="forum.html" class="active">Fórum</a></li>
       <li><a href="associacao.html">Associação</a></li>
     </ul>
   </div>
 </nav>
 
-<section class="hero">
+<section class="hero" style="padding-bottom: 48px;">
   <div class="hero-eyebrow">Comunidade</div>
   <h1>Fórum de Perguntas</h1>
-  <p>Tire suas dúvidas e ajude outros pacientes com DRPAD. Você pode postar como visitante — sem precisar criar conta.</p>
+  <p>Tire suas dúvidas e ajude outros pacientes. Sem necessidade de cadastro.</p>
 </section>
 
 <section class="section section-alt">
   <div class="container">
-
-    <div class="info-box" style="margin-bottom: 32px;">
-      <h4>💬 Como participar</h4>
-      <ul>
-        <li>Clique em <strong>"Iniciar discussão"</strong> ou responda uma pergunta existente</li>
-        <li>Você pode postar como <strong>visitante</strong> — informe apenas nome e e-mail (não aparecem publicamente)</li>
-        <li>Ou entre com sua conta Google, Facebook ou Apple para facilitar</li>
-        <li>Seja respeitoso — todos aqui estão passando por desafios semelhantes</li>
-      </ul>
-    </div>
-
-    <div class="info-box warning" style="margin-bottom: 32px;">
+    <div class="info-box warning" style="margin-bottom: 28px;">
       <h4>⚠️ Aviso médico</h4>
-      <p>Este fórum é um espaço de troca entre pacientes e familiares. As informações compartilhadas <strong>não substituem a orientação do seu médico nefrologista</strong>. Para dúvidas clínicas sobre o seu caso, consulte sempre um profissional de saúde.</p>
+      <p>Este fórum é um espaço de troca entre pacientes. As informações <strong>não substituem a orientação do seu médico nefrologista</strong>.</p>
     </div>
 
-    <!-- Tópicos sugeridos -->
-    <div class="section-title" style="margin-bottom: 16px;">💡 Tópicos frequentes</div>
-    <div class="cards cards-3" style="margin-bottom: 40px;">
-      <div class="card" style="border-top-color: #7c3aed;">
-        <div class="card-icon">💊</div>
-        <h3>Tolvaptan & Importação</h3>
-        <p>Experiências com importação do genérico da Índia, fornecedores, alfândega e custos.</p>
-      </div>
-      <div class="card" style="border-top-color: #2e6ca4;">
-        <div class="card-icon">⚖️</div>
-        <h3>Judicialização</h3>
-        <p>Relatos de pacientes que obtiveram o Tolvaptan via ação judicial, documentos necessários.</p>
-      </div>
-      <div class="card" style="border-top-color: #16a34a;">
-        <div class="card-icon">📈</div>
-        <h3>Exames & TFG</h3>
-        <p>Dúvidas sobre creatinina, TFG, volume renal, classificação Mayo e interpretação de laudos.</p>
-      </div>
+    <div class="forum-layout">
+      <aside class="forum-sidebar">
+        <div class="sidebar-title">Categorias</div>
+        <button class="cat-btn active" onclick="filtrarCategoria('todas', this)">🗂️ Todas <span class="cat-count" id="count-todas">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Diagnóstico', this)">🔍 Diagnóstico <span class="cat-count" id="count-diag">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Tolvaptan', this)">💊 Tolvaptan <span class="cat-count" id="count-tolv">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Importação', this)">📦 Importação <span class="cat-count" id="count-imp">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Judicialização', this)">⚖️ Judicialização <span class="cat-count" id="count-jud">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Sintomas', this)">🩺 Sintomas <span class="cat-count" id="count-sint">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Ferramentas', this)">🔧 Ferramentas <span class="cat-count" id="count-ferr">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Qualidade de vida', this)">🌿 Qualidade de vida <span class="cat-count" id="count-qual">0</span></button>
+        <button class="cat-btn" onclick="filtrarCategoria('Outro', this)">💬 Outro <span class="cat-count" id="count-outro">0</span></button>
+      </aside>
+
+      <main>
+        <div class="forum-bar">
+          <input class="forum-search" type="text" placeholder="Buscar perguntas..." oninput="buscar(this.value)">
+          <button class="btn-nova-pergunta" onclick="abrirModal()">+ Nova pergunta</button>
+        </div>
+        <div id="lista-topicos">
+          <div class="loading-state">⏳ Carregando perguntas...</div>
+        </div>
+      </main>
     </div>
-
-    <!-- Disqus -->
-    <div class="section-title" style="margin-bottom: 8px;">🗨️ Discussões</div>
-    <p style="font-size: 14px; color: var(--muted); margin-bottom: 24px;">
-      Poste sua pergunta abaixo. Você pode entrar com sua conta Google, Facebook ou como visitante (sem cadastro).
-    </p>
-
-    <div style="background: white; border-radius: 16px; padding: 32px; box-shadow: 0 2px 12px rgba(15,35,64,.08);">
-      <div id="disqus_thread"></div>
-    </div>
-
   </div>
 </section>
+
+<div class="modal-overlay" id="modal-nova">
+  <div class="modal">
+    <button class="modal-close" onclick="fecharModal()">✕</button>
+    <div class="modal-title">💬 Nova pergunta</div>
+    <div class="field-group">
+      <label class="field-label">Seu nome ou apelido (opcional)</label>
+      <input class="field-input" id="novo-autor" type="text" placeholder="ex: Maria, Paciente SP, Anônimo...">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Título da pergunta *</label>
+      <input class="field-input" id="novo-titulo" type="text" placeholder="Resuma sua dúvida em uma frase clara">
+    </div>
+    <div class="field-group">
+      <label class="field-label">Categoria *</label>
+      <select class="field-select" id="nova-cat">
+        <option value="">Selecione uma categoria</option>
+        <option>Diagnóstico</option>
+        <option>Tolvaptan</option>
+        <option>Importação</option>
+        <option>Judicialização</option>
+        <option>Sintomas</option>
+        <option>Ferramentas</option>
+        <option>Qualidade de vida</option>
+        <option>Outro</option>
+      </select>
+    </div>
+    <div class="field-group">
+      <label class="field-label">Detalhes da sua pergunta *</label>
+      <textarea class="field-input" id="novo-texto" placeholder="Descreva sua situação com mais detalhes. Quanto mais contexto, melhor a resposta."></textarea>
+    </div>
+    <div class="info-box" style="padding: 12px 14px;">
+      <p>🔒 Nenhum dado pessoal é obrigatório. Seu nome não será verificado.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-cancelar" onclick="fecharModal()">Cancelar</button>
+      <button class="btn-enviar" id="btn-publicar" onclick="publicarPergunta()">Publicar pergunta</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, getDocs, doc, updateDoc, increment, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const app = initializeApp({
+    apiKey: "AIzaSyDzNbY4BYwhfXfuSkxVDL9JxxIE6iFvpEo",
+    authDomain: "drpad-cura.firebaseapp.com",
+    projectId: "drpad-cura",
+    storageBucket: "drpad-cura.firebasestorage.app",
+    messagingSenderId: "132283417511",
+    appId: "1:132283417511:web:cc9fbe44817c94ccd9ec82"
+  });
+  const db = getFirestore(app);
+
+  let todosTopicos = [];
+  let categoriaAtiva = "todas";
+  let buscaAtiva = "";
+  let topicoAberto = null;
+  let votosLocais = JSON.parse(localStorage.getItem("drpad-votos") || "{}");
+
+  const COR = {
+    "Diagnóstico":       { bg: "#dbeafe", color: "#1e40af" },
+    "Tolvaptan":         { bg: "#ede9fe", color: "#6d28d9" },
+    "Importação":        { bg: "#ffedd5", color: "#9a3412" },
+    "Judicialização":    { bg: "#fee2e2", color: "#991b1b" },
+    "Sintomas":          { bg: "#fef9c3", color: "#713f12" },
+    "Ferramentas":       { bg: "#d1fae5", color: "#065f46" },
+    "Qualidade de vida": { bg: "#fce7f3", color: "#9d174d" },
+    "Outro":             { bg: "#f1f5f9", color: "#475569" },
+  };
+
+  function cor(cat) { return COR[cat] || { bg: "#e2eaf4", color: "#0f2340" }; }
+
+  function fmtData(ts) {
+    if (!ts) return "";
+    const d = ts.toDate ? ts.toDate() : new Date(ts);
+    return d.toLocaleDateString("pt-BR", { day: "2-digit", month: "short", year: "numeric" });
+  }
+
+  function atualizarContadores(topicos) {
+    const mapa = { "count-todas": topicos.length, "count-diag": 0, "count-tolv": 0, "count-imp": 0, "count-jud": 0, "count-sint": 0, "count-ferr": 0, "count-qual": 0, "count-outro": 0 };
+    const keys = { "Diagnóstico": "count-diag", "Tolvaptan": "count-tolv", "Importação": "count-imp", "Judicialização": "count-jud", "Sintomas": "count-sint", "Ferramentas": "count-ferr", "Qualidade de vida": "count-qual", "Outro": "count-outro" };
+    topicos.forEach(t => { if (keys[t.categoria]) mapa[keys[t.categoria]]++; });
+    Object.entries(mapa).forEach(([id, n]) => { const el = document.getElementById(id); if (el) el.textContent = n; });
+  }
+
+  function renderizar() {
+    const lista = document.getElementById("lista-topicos");
+    let filtrados = [...todosTopicos];
+    if (categoriaAtiva !== "todas") filtrados = filtrados.filter(t => t.categoria === categoriaAtiva);
+    if (buscaAtiva) filtrados = filtrados.filter(t => t.titulo.toLowerCase().includes(buscaAtiva) || t.texto.toLowerCase().includes(buscaAtiva));
+
+    if (filtrados.length === 0) {
+      lista.innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><p>Nenhuma pergunta encontrada.</p><button class="btn-nova-pergunta" onclick="abrirModal()">Seja o primeiro a perguntar</button></div>`;
+      return;
+    }
+
+    lista.innerHTML = filtrados.map(t => {
+      const c = cor(t.categoria);
+      const votado = votosLocais[t.id];
+      const aberto = topicoAberto === t.id;
+      return `
+        <div class="topico" id="topico-${t.id}" style="border-left-color:${c.color}">
+          <div class="topico-header" onclick="toggleTopico('${t.id}')">
+            <div class="topico-votes" onclick="event.stopPropagation()">
+              <button class="vote-btn ${votado ? 'voted' : ''}" onclick="votar('${t.id}')" title="Marcar como útil">▲</button>
+              <span class="vote-count">${t.votos || 0}</span>
+            </div>
+            <div class="topico-body">
+              <div class="topico-titulo">${t.titulo}</div>
+              <div class="topico-preview">${t.texto}</div>
+              <div class="topico-meta">
+                <span class="tag-cat" style="background:${c.bg};color:${c.color}">${t.categoria}</span>
+                <span class="topico-info">👤 ${t.autor || "Anônimo"} · 📅 ${fmtData(t.criadoEm)}</span>
+                <span class="respostas-badge">💬 ${t.totalRespostas || 0} resposta${(t.totalRespostas || 0) !== 1 ? "s" : ""} <span style="color:${c.color}">${aberto ? "▲" : "▼"}</span></span>
+              </div>
+            </div>
+          </div>
+          ${aberto ? `
+          <div class="topico-expandido">
+            <div class="topico-texto-completo">${t.texto}</div>
+            <div class="respostas-title">💬 Respostas</div>
+            <div id="respostas-${t.id}"><div style="font-size:13px;color:var(--muted);padding:8px 0">Carregando...</div></div>
+            <div class="form-resposta">
+              <div class="respostas-title" style="margin-top:20px">✍️ Sua resposta</div>
+              <div class="form-resposta-row">
+                <input class="field-input" id="resp-autor-${t.id}" type="text" placeholder="Seu nome (opcional)">
+                <div></div>
+              </div>
+              <textarea class="field-input" id="resp-texto-${t.id}" placeholder="Compartilhe sua experiência ou conhecimento..." rows="3"></textarea>
+              <div style="text-align:right;margin-top:10px">
+                <button class="btn-enviar" onclick="publicarResposta('${t.id}')">Publicar resposta</button>
+              </div>
+            </div>
+          </div>` : ""}
+        </div>`;
+    }).join("");
+  }
+
+  async function carregarRespostas(topicoId) {
+    const q = query(collection(db, "topicos", topicoId, "respostas"), orderBy("criadoEm", "asc"));
+    const snap = await getDocs(q);
+    const el = document.getElementById(`respostas-${topicoId}`);
+    if (!el) return;
+    if (snap.empty) {
+      el.innerHTML = `<div style="font-size:13px;color:var(--muted);padding:8px 0;font-style:italic">Ainda sem respostas. Seja o primeiro a responder!</div>`;
+      return;
+    }
+    el.innerHTML = snap.docs.map(d => {
+      const r = d.data();
+      return `<div class="resposta"><div class="resposta-autor">👤 ${r.autor || "Anônimo"}</div><div class="resposta-texto">${r.texto}</div><div class="resposta-data">${fmtData(r.criadoEm)}</div></div>`;
+    }).join("");
+  }
+
+  window.toggleTopico = async function(id) {
+    topicoAberto = topicoAberto === id ? null : id;
+    renderizar();
+    if (topicoAberto) {
+      await carregarRespostas(id);
+      document.getElementById(`topico-${id}`)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+  };
+
+  window.votar = async function(id) {
+    if (votosLocais[id]) { mostrarToast("Você já votou nesta pergunta."); return; }
+    try {
+      await updateDoc(doc(db, "topicos", id), { votos: increment(1) });
+      votosLocais[id] = true;
+      localStorage.setItem("drpad-votos", JSON.stringify(votosLocais));
+      const t = todosTopicos.find(t => t.id === id);
+      if (t) t.votos = (t.votos || 0) + 1;
+      renderizar();
+      if (topicoAberto === id) await carregarRespostas(id);
+      mostrarToast("Voto registrado! ▲");
+    } catch(e) { mostrarToast("Erro ao votar.", true); }
+  };
+
+  window.publicarPergunta = async function() {
+    const titulo = document.getElementById("novo-titulo").value.trim();
+    const texto  = document.getElementById("novo-texto").value.trim();
+    const cat    = document.getElementById("nova-cat").value;
+    const autor  = document.getElementById("novo-autor").value.trim() || "Anônimo";
+    if (!titulo) { mostrarToast("Por favor, escreva um título.", true); return; }
+    if (!texto)  { mostrarToast("Por favor, descreva sua pergunta.", true); return; }
+    if (!cat)    { mostrarToast("Por favor, selecione uma categoria.", true); return; }
+    const btn = document.getElementById("btn-publicar");
+    btn.disabled = true; btn.textContent = "Publicando...";
+    try {
+      await addDoc(collection(db, "topicos"), { titulo, texto, categoria: cat, autor, votos: 0, totalRespostas: 0, criadoEm: serverTimestamp() });
+      fecharModal();
+      ["novo-titulo","novo-texto","novo-autor"].forEach(id => document.getElementById(id).value = "");
+      document.getElementById("nova-cat").value = "";
+      mostrarToast("✅ Pergunta publicada!");
+    } catch(e) { mostrarToast("Erro ao publicar. Tente novamente.", true); }
+    finally { btn.disabled = false; btn.textContent = "Publicar pergunta"; }
+  };
+
+  window.publicarResposta = async function(topicoId) {
+    const texto = document.getElementById(`resp-texto-${topicoId}`).value.trim();
+    const autor = document.getElementById(`resp-autor-${topicoId}`).value.trim() || "Anônimo";
+    if (!texto) { mostrarToast("Por favor, escreva sua resposta.", true); return; }
+    try {
+      await addDoc(collection(db, "topicos", topicoId, "respostas"), { texto, autor, criadoEm: serverTimestamp() });
+      await updateDoc(doc(db, "topicos", topicoId), { totalRespostas: increment(1) });
+      document.getElementById(`resp-texto-${topicoId}`).value = "";
+      document.getElementById(`resp-autor-${topicoId}`).value = "";
+      const t = todosTopicos.find(t => t.id === topicoId);
+      if (t) t.totalRespostas = (t.totalRespostas || 0) + 1;
+      renderizar();
+      await carregarRespostas(topicoId);
+      mostrarToast("✅ Resposta publicada!");
+    } catch(e) { mostrarToast("Erro ao publicar resposta.", true); }
+  };
+
+  window.filtrarCategoria = function(cat, btn) {
+    categoriaAtiva = cat; topicoAberto = null;
+    document.querySelectorAll(".cat-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    renderizar();
+  };
+
+  window.buscar = function(q) { buscaAtiva = q.toLowerCase().trim(); topicoAberto = null; renderizar(); };
+
+  window.abrirModal = function() { document.getElementById("modal-nova").classList.add("open"); document.getElementById("novo-titulo").focus(); };
+  window.fecharModal = function() { document.getElementById("modal-nova").classList.remove("open"); };
+  document.getElementById("modal-nova").addEventListener("click", e => { if (e.target === e.currentTarget) fecharModal(); });
+
+  function mostrarToast(msg, erro = false) {
+    const t = document.getElementById("toast");
+    t.textContent = msg; t.style.background = erro ? "#dc2626" : "#0f2340";
+    t.classList.add("show"); setTimeout(() => t.classList.remove("show"), 2800);
+  }
+
+  // Listener tempo real
+  onSnapshot(query(collection(db, "topicos"), orderBy("criadoEm", "desc")), snap => {
+    todosTopicos = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    atualizarContadores(todosTopicos);
+    renderizar();
+    if (topicoAberto) carregarRespostas(topicoAberto);
+  });
+
+  // Semear exemplos se banco vazio
+  getDocs(collection(db, "topicos")).then(async snap => {
+    if (!snap.empty) return;
+    const exemplos = [
+      { titulo: "Como conseguir o Tolvaptan sem ação judicial?", texto: "Meu nefrologista indicou o Tolvaptan (Mayo 1D) mas não quero entrar na justiça. Alguém conseguiu de outra forma? Ouvi falar de importação da Índia mas não sei por onde começar.", categoria: "Tolvaptan", autor: "Maria SP", votos: 5, totalRespostas: 0 },
+      { titulo: "Qual o melhor exame para medir o volume renal?", texto: "Meu médico pediu para medir o VRT para a classificação Mayo. Ele disse que posso fazer ultrassom ou ressonância. Qual é mais preciso? O plano de saúde cobre?", categoria: "Diagnóstico", autor: "João RJ", votos: 3, totalRespostas: 0 },
+      { titulo: "Posso praticar esportes com rins muito grandes?", texto: "Tenho rins de aproximadamente 1800ml cada (Mayo 1E). Fico com medo de praticar esportes. Alguém tem orientação sobre o que é seguro?", categoria: "Qualidade de vida", autor: "Paciente PR", votos: 4, totalRespostas: 0 },
+    ];
+    for (const ex of exemplos) await addDoc(collection(db, "topicos"), { ...ex, criadoEm: serverTimestamp() });
+  });
+</script>
+
+<script src="js/main.js"></script>
 
 <footer>
   <div class="footer-inner">
@@ -115,26 +424,5 @@
     <span>Baseado no KDIGO 2025 · Não substitui orientação médica</span>
   </div>
 </footer>
-
-<!-- Disqus -->
-<script>
-  var disqus_config = function () {
-    this.page.url = "https://brenocalab.github.io/drpadcura/forum.html";
-    this.page.identifier = "forum-drpad-cura";
-    this.page.title = "Fórum de Perguntas — DRPAD Cura";
-    this.language = "pt_BR";
-  };
-  (function() {
-    var d = document, s = d.createElement('script');
-    s.src = 'https://drpad.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', +new Date());
-    (d.head || d.body).appendChild(s);
-  })();
-</script>
-<noscript>
-  Por favor ative o JavaScript para ver os comentários do <a href="https://disqus.com/?ref_noscript">Disqus</a>.
-</noscript>
-
-<script src="js/main.js"></script>
 </body>
 </html>
