@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ferramentas para Pacientes | DRPAD Cura</title>
+  <meta name="description" content="Ferramentas gratuitas para pacientes com DRPAD: curva da função renal (TFG) e calculadora de classificação Mayo.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">DRPAD <span>Cura</span></a>
+    <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+    <ul class="nav-links">
+      <li><a href="index.html">Início</a></li>
+      <li><a href="sobre.html">Sobre a DRPAD</a></li>
+      <li><a href="tratamento.html">Tratamento</a></li>
+      <li><a href="ferramentas.html">Ferramentas</a></li>
+      <li><a href="faq.html">FAQ</a></li>
+      <li><a href="forum.html">Fórum</a></li>
+      <li><a href="associacao.html">Associação</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">Ferramentas Clínicas</div>
+  <h1>Ferramentas para Pacientes</h1>
+  <p>Calculadoras e rastreadores gratuitos desenvolvidos especificamente para pacientes com DRPAD acompanharem sua doença.</p>
+</section>
+
+<!-- Curva TFG -->
+<section class="section section-alt" id="curva-tfg">
+  <div class="container">
+    <div class="section-title">📈 Curva da Função Renal</div>
+    <p class="section-sub">Registre seus exames de creatinina ou TFG e visualize a evolução ao longo do tempo, com cálculo automático do slope (declínio anual).</p>
+
+    <div class="cards cards-3" style="margin-bottom: 28px;">
+      <div class="card" style="border-top-color: #1a3f6f;">
+        <div class="card-icon">🧪</div>
+        <h3>Creatinina ou TFG</h3>
+        <p>Aceita creatinina sérica (calcula TFG pela CKD-EPI 2021) ou TFG diretamente do seu laudo.</p>
+      </div>
+      <div class="card" style="border-top-color: #f59e0b;">
+        <div class="card-icon">📉</div>
+        <h3>Slope automático</h3>
+        <p>Calcula automaticamente o declínio anual (mL/min/ano) por regressão linear — o mesmo parâmetro usado pelo seu nefrologista.</p>
+      </div>
+      <div class="card" style="border-top-color: #16a34a;">
+        <div class="card-icon">💾</div>
+        <h3>Dados salvos</h3>
+        <p>Os dados ficam salvos no seu navegador — pode fechar e voltar que o histórico permanece.</p>
+      </div>
+    </div>
+
+    <div class="info-box warning" style="margin-bottom: 20px;">
+      <h4>⚠️ Aviso</h4>
+      <p>Esta ferramenta é apenas para acompanhamento pessoal. A TFG é estimada pela fórmula CKD-EPI 2021 a partir da creatinina. Os dados ficam salvos apenas no seu navegador e não são enviados a nenhum servidor. Sempre discuta os resultados com seu médico nefrologista.</p>
+    </div>
+
+    <div class="iframe-wrap">
+      <iframe
+        src="https://curvafuncaorenal.netlify.app/"
+        height="750"
+        title="Curva da Função Renal — DRPAD Cura"
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Calculadora Mayo -->
+<section class="section" id="calculadora-mayo">
+  <div class="container">
+    <div class="section-title">🧮 Calculadora — Classificação Mayo</div>
+    <p class="section-sub">Calcule sua classificação Mayo (1A a 1E) a partir do volume renal total e altura, seguindo a metodologia validada de Irazabal et al. (JASN 2015).</p>
+
+    <div class="cards cards-3" style="margin-bottom: 28px;">
+      <div class="card" style="border-top-color: #7c3aed;">
+        <div class="card-icon">📐</div>
+        <h3>O que é a Classificação Mayo?</h3>
+        <p>Sistema que classifica pacientes de 1A (menor risco) a 1E (maior risco) com base no Volume Renal Total ajustado para altura e idade.</p>
+      </div>
+      <div class="card" style="border-top-color: #7c3aed;">
+        <div class="card-icon">🎯</div>
+        <h3>Para que serve?</h3>
+        <p>Ajuda a identificar pacientes com progressão rápida que podem se beneficiar do Tolvaptan. Classes 1C, 1D e 1E têm indicação.</p>
+      </div>
+      <div class="card" style="border-top-color: #7c3aed;">
+        <div class="card-icon">🏥</div>
+        <h3>Como obter o volume renal?</h3>
+        <p>O Volume Renal Total (VRT) é medido por ultrassom, tomografia ou ressonância magnética dos rins, calculado pelo radiologista.</p>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-bottom: 20px;">
+      <h4>ℹ️ Nota importante</h4>
+      <p>Esta não é a ferramenta oficial da Mayo Clinic. Desenvolvida para fins didáticos e validada contra a calculadora oficial. Para uso clínico, consulte sempre seu médico. Aplicável apenas a pacientes com DRPAD típica (padrão bilateral e difuso de cistos).</p>
+    </div>
+
+    <div class="iframe-wrap">
+      <iframe
+        src="https://calculadora-drpad-mayo.netlify.app/"
+        height="700"
+        title="Calculadora Mayo — Classificação DRPAD"
+        loading="lazy">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- Sobre as ferramentas -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-title">Sobre as ferramentas</div>
+    <p class="section-sub">Desenvolvidas por e para pacientes com DRPAD, com base nas melhores evidências científicas disponíveis.</p>
+    <div class="info-box">
+      <h4>🔒 Privacidade</h4>
+      <p>Todas as ferramentas rodam inteiramente no seu navegador. <strong>Nenhum dado pessoal ou clínico é enviado a servidores externos.</strong> Os dados da curva da função renal são salvos apenas localmente no seu dispositivo (localStorage).</p>
+    </div>
+    <div class="info-box warning" style="margin-top: 16px;">
+      <h4>📋 Referências científicas</h4>
+      <ul>
+        <li><strong>CKD-EPI 2021:</strong> Inker et al. NEJM 2021 — fórmula de estimativa da TFG sem raça</li>
+        <li><strong>Classificação Mayo:</strong> Irazabal MV et al. JASN 2015;26(1):160–72</li>
+        <li><strong>Diretrizes gerais:</strong> KDIGO 2025 Clinical Practice Guideline for ADPKD</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-col">
+      <a href="index.html" class="footer-logo">DRPAD <span>Cura</span></a>
+      <p>Associação brasileira de pacientes com DRPAD.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Sobre a Doença</h4>
+      <a href="sobre.html">O que é a DRPAD</a>
+      <a href="sobre.html#sintomas">Sintomas</a>
+      <a href="sobre.html#genetica">Causa genética</a>
+      <a href="sobre.html#progressao">Progressão</a>
+    </div>
+    <div class="footer-col">
+      <h4>Tratamento</h4>
+      <a href="tratamento.html">Guia de tratamento</a>
+      <a href="tratamento.html#tolvaptan">Tolvaptan no Brasil</a>
+      <a href="tratamento.html#importacao">Importação do genérico</a>
+      <a href="tratamento.html#judicializacao">Judicialização</a>
+    </div>
+    <div class="footer-col">
+      <h4>Recursos</h4>
+      <a href="ferramentas.html">Ferramentas</a>
+      <a href="faq.html">FAQ</a>
+      <a href="associacao.html">A associação</a>
+      <a href="associacao.html#contato">Contato</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 DRPAD Cura.</span>
+    <span>Baseado no KDIGO 2025 · Não substitui orientação médica</span>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
