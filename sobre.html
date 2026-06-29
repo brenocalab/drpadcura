@@ -20,6 +20,7 @@
       <li><a href="sobre.html">Sobre a DRPAD</a></li>
       <li><a href="tratamento.html">Tratamento</a></li>
       <li><a href="ferramentas.html">Ferramentas</a></li>
+      <li><a href="pesquisa.html">Pesquisa</a></li>
       <li><a href="faq.html">FAQ</a></li>
       <li><a href="forum.html">Fórum</a></li>
       <li><a href="associacao.html">Associação</a></li>
@@ -99,6 +100,85 @@
       <p>O teste genético (sequenciamento do PKD1 e PKD2) é indicado em situações específicas, como doadores vivos com imagem inconclusiva ou casos atípicos.</p>
 
       <h2 id="progressao">Progressão da Doença</h2>
+      <p>Um dos aspectos mais importantes — e menos intuitivos — da DRPAD é que a <strong>função renal pode parecer normal por muitos anos</strong>, mesmo enquanto a doença avança silenciosamente. Os rins saudáveis compensam a perda progressiva causada pelos cistos, até que essa compensação se esgota e a função renal começa a cair de forma mais visível.</p>
+
+      <div style="background: white; border-radius: 14px; padding: 24px; box-shadow: 0 2px 12px rgba(15,35,64,.08); margin: 24px 0;">
+        <svg viewBox="0 0 600 430" style="width:100%; height:auto; font-family: Inter, sans-serif;">
+          <!-- Axes -->
+          <line x1="70" y1="30" x2="70" y2="320" stroke="#94a3b8" stroke-width="1.5"/>
+          <line x1="70" y1="320" x2="560" y2="320" stroke="#94a3b8" stroke-width="1.5"/>
+
+          <!-- Y axis labels -->
+          <text x="60" y="35" text-anchor="end" font-size="12" fill="#5a7290">140</text>
+          <text x="60" y="95" text-anchor="end" font-size="12" fill="#5a7290">100</text>
+          <text x="60" y="155" text-anchor="end" font-size="12" fill="#5a7290">60</text>
+          <text x="60" y="215" text-anchor="end" font-size="12" fill="#5a7290">30</text>
+          <text x="60" y="320" text-anchor="end" font-size="12" fill="#5a7290">0</text>
+
+          <!-- Gridlines -->
+          <line x1="70" y1="30" x2="560" y2="30" stroke="#e2eaf4" stroke-width="1"/>
+          <line x1="70" y1="90" x2="560" y2="90" stroke="#e2eaf4" stroke-width="1"/>
+          <line x1="70" y1="150" x2="560" y2="150" stroke="#e2eaf4" stroke-width="1"/>
+          <line x1="70" y1="210" x2="560" y2="210" stroke="#e2eaf4" stroke-width="1"/>
+
+          <!-- Reference lines G3/G4 -->
+          <line x1="70" y1="210" x2="560" y2="210" stroke="#d97706" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="565" y="214" font-size="10" fill="#d97706">G3 (60)</text>
+          <line x1="70" y1="277" x2="560" y2="277" stroke="#dc2626" stroke-width="1" stroke-dasharray="4 3"/>
+          <text x="565" y="281" font-size="10" fill="#dc2626">G4 (30)</text>
+
+          <!-- X axis labels (age) -->
+          <text x="70" y="338" text-anchor="middle" font-size="12" fill="#5a7290">10</text>
+          <text x="150" y="338" text-anchor="middle" font-size="12" fill="#5a7290">20</text>
+          <text x="230" y="338" text-anchor="middle" font-size="12" fill="#5a7290">30</text>
+          <text x="310" y="338" text-anchor="middle" font-size="12" fill="#5a7290">40</text>
+          <text x="390" y="338" text-anchor="middle" font-size="12" fill="#5a7290">50</text>
+          <text x="470" y="338" text-anchor="middle" font-size="12" fill="#5a7290">60</text>
+          <text x="550" y="338" text-anchor="middle" font-size="12" fill="#5a7290">70</text>
+          <text x="315" y="358" text-anchor="middle" font-size="13" fill="#1a2332" font-weight="600">Idade (anos)</text>
+
+          <!-- Y axis title -->
+          <text x="22" y="175" text-anchor="middle" font-size="12" fill="#1a2332" font-weight="600" transform="rotate(-90 22 175)">TFG (mL/min/1,73m²)</text>
+
+          <!-- The curve: stable then progressive decline -->
+          <polyline points="70,90 150,90 230,93 310,108 390,150 470,225 550,290"
+            fill="none" stroke="#1a3f6f" stroke-width="3" stroke-linecap="round"/>
+          <circle cx="70" cy="90" r="4" fill="#1a3f6f"/>
+          <circle cx="150" cy="90" r="4" fill="#1a3f6f"/>
+          <circle cx="230" cy="93" r="4" fill="#1a3f6f"/>
+          <circle cx="310" cy="108" r="4" fill="#1a3f6f"/>
+          <circle cx="390" cy="150" r="4" fill="#1a3f6f"/>
+          <circle cx="470" cy="225" r="4" fill="#1a3f6f"/>
+          <circle cx="550" cy="290" r="4" fill="#1a3f6f"/>
+
+          <!-- Annotation arrow -->
+          <line x1="265" y1="180" x2="305" y2="115" stroke="#0f2340" stroke-width="1.5" marker-end="url(#arrow)"/>
+          <defs>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="4" refY="4" orient="auto">
+              <path d="M0,0 L8,4 L0,8 Z" fill="#0f2340"/>
+            </marker>
+          </defs>
+          <text x="195" y="195" font-size="13" fill="#0f2340" font-weight="600">Início real do declínio</text>
+
+          <!-- Bottom legend: disease phases (own row, clear of axis) -->
+          <rect x="90" y="390" width="14" height="14" rx="3" fill="#93c5fd"/>
+          <text x="110" y="401" font-size="12" fill="#1a3f6f">Formação e crescimento de cistos</text>
+          <rect x="350" y="390" width="14" height="14" rx="3" fill="#fca5a5"/>
+          <text x="370" y="401" font-size="12" fill="#991b1b">Inflamação e fibrose</text>
+        </svg>
+        <p style="font-size: 12px; color: var(--muted); text-align: center; margin-top: 8px;">Padrão típico de progressão da TFG na DRPAD. Adaptado conceitualmente de Grantham JJ et al., <em>Nat Rev Nephrol.</em> 2011;7(10):556–566.</p>
+      </div>
+
+      <div class="info-box warning">
+        <h4>⏳ Por que isso importa para o tratamento precoce</h4>
+        <p>Quando a TFG finalmente começa a cair de forma perceptível nos exames, <strong>os cistos já estão substituindo uma parte significativa do tecido renal há anos</strong>. Os rins saudáveis "escondem" o dano compensando o trabalho das partes já comprometidas. Por isso, esperar a TFG cair para só então pensar em tratamento pode significar agir tarde demais — a Classificação Mayo e o Volume Renal Total ajudam a identificar o risco de progressão <strong>antes</strong> que a TFG comece a declinar, permitindo decisões de tratamento mais precoces e eficazes.</p>
+      </div>
+
+      <div class="info-box success">
+        <h4>📈 Acompanhe sua própria curva</h4>
+        <p>Use nossa <a href="ferramentas.html#curva-tfg">ferramenta de Curva da Função Renal</a> para registrar seus exames e visualizar se sua TFG está estável ou já entrou na fase de declínio — com cálculo automático do slope (declínio anual).</p>
+      </div>
+
       <p>A DRPAD é uma doença progressiva. A função renal declina gradualmente ao longo das décadas, com velocidade variável entre pacientes. Os principais fatores de risco para progressão mais rápida incluem:</p>
       <ul>
         <li>Mutação no gene PKD1 (especialmente alelos truncantes)</li>
@@ -146,6 +226,8 @@
     <div class="footer-col">
       <h4>Tratamento</h4>
       <a href="tratamento.html">Guia de tratamento</a>
+      <a href="guia-tolvaptan.html">Guia do Tolvaptan</a>
+      <a href="pesquisa.html">Pesquisa e tratamentos futuros</a>
       <a href="tratamento.html#tolvaptan">Tolvaptan no Brasil</a>
       <a href="tratamento.html#importacao">Importação do genérico</a>
       <a href="tratamento.html#judicializacao">Judicialização</a>
