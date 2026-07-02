@@ -4,7 +4,7 @@
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>❤️</text></svg>">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Guia Prático do Tolvaptan | DRPAD Cura</title>
+  <title>Guia Prático do Tolvaptan | DRPAD Brasil</title>
   <meta name="description" content="Guia prático para quem vai começar ou já usa Tolvaptan: protocolo de dose, custo da importação, o que pode e não pode fazer, e como controlar os efeitos colaterais.">
   <link rel="stylesheet" href="css/style.css">
 </head>
@@ -12,7 +12,7 @@
 
 <nav>
   <div class="nav-inner">
-    <a href="index.html" class="nav-logo">DRPAD <span>Cura</span></a>
+    <a href="index.html" class="nav-logo">DRPAD <span>Brasil</span></a>
     <button class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
     <ul class="nav-links">
       <li><a href="index.html">Início</a></li>
@@ -110,10 +110,22 @@
             <td style="padding: 10px; border: 1px solid #d1dce8;">US$ 4,36</td>
           </tr>
           <tr style="background:#f0fdf4; font-weight:700;">
-            <td style="padding: 10px; border: 1px solid #d1dce8;" colspan="2">Total mensal (30 dias)</td>
-            <td style="padding: 10px; border: 1px solid #d1dce8;">
-              ≈ US$ 130,80
-              <div id="custo-brl" style="font-weight:700; color: var(--blue); margin-top: 4px; font-size: 13px;">
+            <td style="padding: 10px; border: 1px solid #d1dce8;" colspan="2">Subtotal mensal (30 dias)</td>
+            <td style="padding: 10px; border: 1px solid #d1dce8;">US$ 130,80</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #d1dce8;" colspan="2">Taxa de transferência (1,5%)</td>
+            <td style="padding: 10px; border: 1px solid #d1dce8;">US$ 1,96</td>
+          </tr>
+          <tr>
+            <td style="padding: 10px; border: 1px solid #d1dce8;" colspan="2">IOF (3,5%)</td>
+            <td style="padding: 10px; border: 1px solid #d1dce8;">US$ 4,58</td>
+          </tr>
+          <tr style="background:#0f2340; color:white; font-weight:700;">
+            <td style="padding: 10px; border: 1px solid #1a3f6f;" colspan="2">Total mensal estimado</td>
+            <td style="padding: 10px; border: 1px solid #1a3f6f;">
+              ≈ US$ 137,34
+              <div id="custo-brl" style="font-weight:700; color: #93c5fd; margin-top: 4px; font-size: 13px;">
                 <span id="custo-brl-valor">Calculando câmbio de hoje...</span>
               </div>
             </td>
@@ -125,7 +137,7 @@
 
       <script>
         (function() {
-          const valorDolar = 130.80;
+          const valorDolar = 137.34; // inclui 1,5% taxa transferência + 3,5% IOF
           const elValor = document.getElementById('custo-brl-valor');
           const elInfo = document.getElementById('cambio-info');
 
@@ -136,11 +148,11 @@
               const valorReais = (valorDolar * cotacao).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
               const dataHora = new Date(data.USDBRL.create_date.replace(' ', 'T')).toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' });
               elValor.textContent = `≈ R$ ${valorReais}`;
-              elInfo.innerHTML = `💱 Câmbio de hoje: US$ 1 = R$ ${cotacao.toFixed(2).replace('.', ',')} (atualizado em ${dataHora}) — <strong>valor aproximado</strong>, sujeito a variação cambial e taxas adicionais de importação.`;
+              elInfo.innerHTML = `💱 Câmbio de hoje: US$ 1 = R$ ${cotacao.toFixed(2).replace('.', ',')} (atualizado em ${dataHora}) — <strong>valor aproximado</strong>, já incluindo 1,5% de taxa de transferência e 3,5% de IOF.`;
             })
             .catch(() => {
               elValor.textContent = '';
-              elInfo.textContent = 'Não foi possível buscar a cotação do dólar agora — o valor em reais não pôde ser calculado. Considere o valor em dólar (US$ 130,80) acima para sua referência.';
+              elInfo.textContent = 'Não foi possível buscar a cotação do dólar agora — o valor em reais não pôde ser calculado. Considere o valor em dólar (US$ 137,34) acima para sua referência.';
             });
         })();
       </script>
@@ -306,7 +318,7 @@
 <footer>
   <div class="footer-inner">
     <div class="footer-col">
-      <a href="index.html" class="footer-logo">DRPAD <span>Cura</span></a>
+      <a href="index.html" class="footer-logo">DRPAD <span>Brasil</span></a>
       <p>Associação brasileira de pacientes com DRPAD.</p>
     </div>
     <div class="footer-col">
@@ -333,7 +345,7 @@
     </div>
   </div>
   <div class="footer-bottom">
-    <span>© 2025 DRPAD Cura.</span>
+    <span>© 2025 DRPAD Brasil.</span>
     <span>Baseado no KDIGO 2025 · Não substitui orientação médica</span>
   </div>
 </footer>
